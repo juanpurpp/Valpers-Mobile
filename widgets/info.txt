@@ -1,1 +1,0 @@
-En esta carpeta deben ir los archivos que corresponden a la visualización de la APP
