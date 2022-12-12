@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:valpersmobile/widgets/Background.dart';
+import 'package:valpersmobile/widgets/ResultadoWidget.dart';
 import 'package:valpersmobile/widgets/SalaWidget.dart';
 
 void main() {
@@ -37,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
           child: Stack(
         children: const <Widget>[
-          Sala(),
+          Resultado(),
         ],
       )),
     );
