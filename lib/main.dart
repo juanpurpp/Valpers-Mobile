@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Valpers',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       initialRoute: '/',
       //Aqui agregar las rutas de los widgets, primero hay que importarlo más arriba
