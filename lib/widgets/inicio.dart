@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyLobby extends StatelessWidget {
-  const MyLobby({super.key});
+class Inicio extends StatelessWidget {
+  const Inicio({super.key});
 
   @override
   Widget build(BuildContext context) {
