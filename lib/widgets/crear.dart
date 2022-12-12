@@ -12,8 +12,10 @@ class Inicio extends StatelessWidget {
               
         
         Column (mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: <Widget>[
-          const Text("Crear", style:TextStyle(color: Color(0xFFE74C3C),fontSize: 40.0),),
-          Container(
+
+          const Text("Crear", style:TextStyle(color: Color(0xFFE74C3C),fontSize: 40.0),),   //titulo de widget
+
+          Container(                //container con nombre de usuario y dropbox
             margin: const EdgeInsets.all(25),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: const <Widget>[
               Expanded(
@@ -28,7 +30,10 @@ class Inicio extends StatelessWidget {
             ],)
 
           ),
-          Container(
+
+          Container(),              //container vacio(es para un espacio en blanco)
+
+          Container(                //boton de crear partida
             margin: EdgeInsets.all(25),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -66,10 +71,10 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.red),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.red,
       ),
       onChanged: (String? value) {
         // This is called when the user selects an item.
