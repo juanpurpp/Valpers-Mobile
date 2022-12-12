@@ -6,13 +6,13 @@ class Inicio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Valpers.gg Mobile')),
         body: Center(child: Column(children: <Widget>[
+          Text("Valpers.GG\nMobile", style:TextStyle(color: Color(0xFFE74C3C), backgroundColor: Color(0xFF333333), fontSize: 40.0), textAlign: TextAlign.center,),
           Container(
             margin: EdgeInsets.all(25),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Color(0xFFE74C3C),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black
               ),
               child:Text('Crear Partida', style:TextStyle(fontSize: 20.0),),
               onPressed: () {},
@@ -20,9 +20,9 @@ class Inicio extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.all(25),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Color(0xFFE74C3C),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
               ),
               onPressed: () {},
               child: const Text('Unirse a Partida', style:TextStyle(fontSize: 20.0),),
