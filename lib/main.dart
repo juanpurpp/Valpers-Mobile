@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //Se importan los widgets
-import 'package:valpersmobile/widgets/inicio.dart';
+import 'package:valpersmobile/widgets/crear.dart';
 
 
 void main() {
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Valpers',
       theme: ThemeData(
+        brightness: Brightness.dark,
         primarySwatch: Colors.red,
       ),
       initialRoute: '/',
