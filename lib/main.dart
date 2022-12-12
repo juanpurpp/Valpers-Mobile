@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //Se importan los widgets
-import 'package:valpersmobile/widgets/crear.dart';
+import 'package:valpersmobile/widgets/unirse.dart';
 
 
 void main() {

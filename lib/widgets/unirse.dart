@@ -12,7 +12,7 @@ class Inicio extends StatelessWidget {
               
         
         Column (mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: <Widget>[
-          const Text("Crear", style:TextStyle(color: Color(0xFFE74C3C),fontSize: 40.0),),
+          const Text("Unirse", style:TextStyle(color: Color(0xFFE74C3C),fontSize: 40.0),),
           Container(
             margin: const EdgeInsets.all(25),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: const <Widget>[
@@ -29,13 +29,23 @@ class Inicio extends StatelessWidget {
 
           ),
           Container(
-            margin: EdgeInsets.all(25),
+            margin: const EdgeInsets.all(25),
+            child: const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'ingrese codigo ',
+              ),
+            ),
+          ),
+
+          Container(
+            margin: const EdgeInsets.all(25),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
               ),
               onPressed: () {},
-              child: const Text('Crear partida', style:TextStyle(fontSize: 20.0),),
+              child: const Text('Unirse a partida', style:TextStyle(fontSize: 20.0),),
             )
           )
         ])
@@ -66,10 +76,10 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.red),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.red,
       ),
       onChanged: (String? value) {
         // This is called when the user selects an item.
