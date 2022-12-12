@@ -8,7 +8,7 @@ class Inicio extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Column(children: <Widget>[
-      Text(
+      const Text(
         "Valpers.GG\nMobile",
         style: TextStyle(
             color: Color(0xFFE74C3C),
@@ -20,11 +20,13 @@ class Inicio extends StatelessWidget {
           margin: EdgeInsets.all(25),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(foregroundColor: Colors.black),
-            child: Text(
+            child: const Text(
               'Crear Partida',
               style: TextStyle(fontSize: 20.0),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/crear');
+            },
           )),
       Container(
           margin: EdgeInsets.all(25),
@@ -32,7 +34,9 @@ class Inicio extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/unirse');
+            },
             child: const Text(
               'Unirse a Partida',
               style: TextStyle(fontSize: 20.0),

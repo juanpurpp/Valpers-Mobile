@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Inicio extends StatelessWidget {
-  const Inicio({super.key});
+class Crear extends StatelessWidget {
+  const Crear({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,9 @@ class Inicio extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/sala');
+                },
                 child: const Text(
                   'Crear partida',
                   style: TextStyle(fontSize: 20.0),

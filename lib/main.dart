@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 //Se importan los widgets
-import 'package:valpersmobile/widgets/unirse.dart';
-
-import 'package:valpersmobile/widgets/Background.dart';
-import 'package:valpersmobile/widgets/ResultadoWidget.dart';
-import 'package:valpersmobile/widgets/SalaWidget.dart';
+import 'widgets/Background.dart';
+import 'widgets/ResultadoWidget.dart';
+import 'widgets/SalaWidget.dart';
+import 'widgets/crear.dart';
+import 'widgets/unirse.dart';
+import 'widgets/inicio.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,38 +18,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Valpers',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.red,
-      ),
-      initialRoute: '/',
-      //Aqui agregar las rutas de los widgets, primero hay que importarlo más arriba
-      routes: {
-        '/': (context) => const Inicio(),
-      },
-      home: const MyHomePage(title: 'Valpers.gg'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Stack(
-        children: const <Widget>[
-          Resultado(),
-        ],
-      )),
-    );
+        title: 'Valpers',
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.red,
+        ),
+        initialRoute: '/',
+        //Aqui agregar las rutas de los widgets, primero hay que importarlo más arriba
+        routes: {
+          '/': (context) => const Inicio(),
+          '/crear': (context) => const Crear(),
+          '/unirse': (context) => const Unirse(),
+          '/sala': (context) => const Sala(),
+          '/resultado': (context) => const Resultado(),
+        });
   }
 }

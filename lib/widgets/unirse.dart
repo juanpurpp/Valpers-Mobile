@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 
-class Inicio extends StatelessWidget {
-  const Inicio({super.key});
+class Unirse extends StatelessWidget {
+  const Unirse({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:
-        Center(child:
-
-              
-        
-        Column (mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: <Widget>[
-          const Text("Unirse", style:TextStyle(color: Color(0xFFE74C3C),fontSize: 40.0),),
-          Container(
-            margin: const EdgeInsets.all(25),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: const <Widget>[
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Nombre de usuario  ',
-                  ),
-                ),
-              ),
-              DropdownButtonExample(),
-            ],)
-
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+          const Text(
+            "Unirse",
+            style: TextStyle(color: Color(0xFFE74C3C), fontSize: 40.0),
           ),
+          Container(
+              margin: const EdgeInsets.all(25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Nombre de usuario  ',
+                      ),
+                    ),
+                  ),
+                  DropdownButtonExample(),
+                ],
+              )),
           Container(
             margin: const EdgeInsets.all(25),
             child: const TextField(
@@ -37,28 +39,53 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-
           Container(
-            margin: const EdgeInsets.all(25),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-              ),
-              onPressed: () {},
-              child: const Text('Unirse a partida', style:TextStyle(fontSize: 20.0),),
-            )
-          )
-        ])
-      )       
-    );
-  } 
+              margin: const EdgeInsets.all(25),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/sala');
+                },
+                child: const Text(
+                  'Unirse a partida',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ))
+        ])));
+  }
 }
 
-
 //dropdown
-const List<String> list = <String>['Indefinido','Hierro-1', 'Hierro-2', 'Hierro-3', 'Bronce-1', 'Bronce-2', 'Bronce-3', 'Plata-1',
-'Plata-2', 'Plata-3', 'Oro-1', 'Oro-2', 'Oro-3', 'Platino-1', 'Platino-2', 'Platino-3','Diamante-1','Diamante-2','Diamante-3',
-'Ascendente-1','Ascendente-2','Ascendente-3','Inmortal-1','Inmortal-2','Inmortal-3','Radiante'];
+const List<String> list = <String>[
+  'Indefinido',
+  'Hierro-1',
+  'Hierro-2',
+  'Hierro-3',
+  'Bronce-1',
+  'Bronce-2',
+  'Bronce-3',
+  'Plata-1',
+  'Plata-2',
+  'Plata-3',
+  'Oro-1',
+  'Oro-2',
+  'Oro-3',
+  'Platino-1',
+  'Platino-2',
+  'Platino-3',
+  'Diamante-1',
+  'Diamante-2',
+  'Diamante-3',
+  'Ascendente-1',
+  'Ascendente-2',
+  'Ascendente-3',
+  'Inmortal-1',
+  'Inmortal-2',
+  'Inmortal-3',
+  'Radiante'
+];
 
 class DropdownButtonExample extends StatefulWidget {
   const DropdownButtonExample({super.key});
