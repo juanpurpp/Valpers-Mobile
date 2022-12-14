@@ -15,7 +15,9 @@ class Inicio extends StatelessWidget {
                 foregroundColor: Colors.black
               ),
               child:Text('Crear Partida', style:TextStyle(fontSize: 20.0),),
-              onPressed: () {},
+              onPressed: () {
+              Navigator.pushNamed(context, '/crear');
+            },
             )
           ),
           Container(
@@ -24,7 +26,9 @@ class Inicio extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+              Navigator.pushNamed(context, '/unirse');
+            },
               child: const Text('Unirse a Partida', style:TextStyle(fontSize: 20.0),),
             )
           )
