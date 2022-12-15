@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:valpersmobile/widgets/Components/Switch.dart';
 
 class Sala extends StatelessWidget {
   const Sala({super.key});
@@ -11,7 +12,10 @@ class Sala extends StatelessWidget {
       children: <Widget>[
         const Expanded(
             child: Center(
-          child: Text('Sala'),
+          child: Text(
+            "Sala",
+            style: TextStyle(color: Color(0xFFE74C3C), fontSize: 40.0),
+          ),
         )),
         Expanded(
           child: GridView(
@@ -103,11 +107,8 @@ class Sala extends StatelessWidget {
                     onPressed: () {},
                     child: const Text('Mapa'),
                   ),
-                  ElevatedButton(
-                    style: style,
-                    onPressed: () {},
-                    child: const Text('CheckList'),
-                  ),
+                  const Text('Balancear'),
+                  const SwitchExample(),
                 ],
               ),
               const Text('Codigo: AAAA-44BD-2022'),

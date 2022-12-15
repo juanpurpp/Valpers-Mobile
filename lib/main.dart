@@ -38,7 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
           child: Stack(
         children: const <Widget>[
-          Resultado(),
+          // Resultado(),
+          Sala(),
         ],
       )),
     );

@@ -11,94 +11,17 @@ class Resultado extends StatelessWidget {
       children: <Widget>[
         const Expanded(
             child: Center(
-          child: Text('Resultado'),
+          child: Text(
+            "Resultado",
+            style: TextStyle(color: Color(0xFFE74C3C), fontSize: 40.0),
+          ),
         )),
         Expanded(
           child: GridView(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, mainAxisExtent: 55),
             children: const [
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 1',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 1',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 2',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 2',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 3',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 3',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 4',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 4',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 5',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-              TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      hintText: 'Juagador 5',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.redAccent),
-                      ))),
-            ],
+              ],
           ),
         ),
         Expanded(
@@ -110,7 +33,7 @@ class Resultado extends StatelessWidget {
                   child: Text('Mapa'),
                 ),
               ),
-              Container(
+              Expanded(
                 child: Image.asset("images/Maps.jpg"),
               ),
             ])),
