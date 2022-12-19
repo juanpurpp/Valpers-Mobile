@@ -1,10 +1,23 @@
+import 'dart:async';
+
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
 import 'package:valpersmobile/widgets/Components/Switch.dart';
+import 'package:valpersmobile/widgets/Components/mapaCheckbox.dart';
 
 class Sala extends StatelessWidget {
   const Sala({super.key});
+
+  get list => null;
   @override
   Widget build(BuildContext context) {
+    List<dynamic> nombres = ['1', '2', '3', '4'];
+    List<dynamic> valores = [
+      1,
+      2,
+      3,
+      4,
+    ];
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     return Column(
@@ -101,14 +114,10 @@ class Sala extends StatelessWidget {
                 children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: style,
-                    onPressed: () {},
-                    child: const Text('Mapa'),
-                  ),
-                  const Text('Balancear'),
-                  const SwitchExample(),
+                children: const [
+                  DialogExample(),
+                  Text('Balancear'),
+                  SwitchExample(),
                 ],
               ),
               const Text('Codigo: AAAA-44BD-2022'),
