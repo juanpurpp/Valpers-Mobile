@@ -13,10 +13,24 @@ class DialogExample extends StatelessWidget {
                 context: context,
                 cancelDialogText: "cancelar",
                 isMultiSelection: true,
-                itemsTitle: List.generate(15, (index) => "$index"),
+                itemsTitle: [
+                  "Pearl",
+                  "Fracture",
+                  "Icebox",
+                  "Haven",
+                  "Ascent",
+                  "Split"
+                ],
                 submitDialogText: "seleccionar",
                 dialogTitle: Text("Mapas"),
-                values: List.generate(15, (index) => index));
+                values: [
+                  "Pearl",
+                  "Fracture",
+                  "Icebox",
+                  "Haven",
+                  "Ascent",
+                  "Split"
+                ]);
             if (values != null) {
               print(values);
             }
