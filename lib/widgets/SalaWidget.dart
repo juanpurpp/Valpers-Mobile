@@ -1,19 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'dart:convert';
+import 'dart:collection';
 
-bool _isChecked = false;
+bool balance = false;
 final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-List<int> _selectedValues = [];
+
+List<dynamic> selectedMapas = [];
+
+List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
+
+List<PopupMenuItem> menuItems = [];
+IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
+  'transports': ['websocket'],
+});
 
 class Sala extends StatefulWidget {
   const Sala({super.key});
+
   @override
   _SalaState createState() => _SalaState();
 }
 
 class _SalaState extends State<Sala> {
   @override
+  // ignore: must_call_super
+  initState() {
+    // ignore: avoid_print
+    //conexión entre los websocket
+
+    socket.onConnect((_) {
+      print('connected');
+    });
+    socket.emit('subscribe', 'channel.1');
+
+    //    Cuando se recibe una actualización
+    socket.on('message', (entrada) {
+      // do something with the data received from the server
+      print(entrada);
+      selectedMapas = entrada['mapas'].toList();
+      balance = entrada['balance'];
+      setState(() {});
+    });
+    //
+  }
+
+  @override
   Widget build(BuildContext context) {
+    menuItems = [];
+    for (dynamic value in values) {
+      menuItems.add(
+        CheckedPopupMenuItem(
+          checked: selectedMapas.contains(value),
+          value: value,
+          child: Text(value.toString()),
+        ),
+      );
+    }
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -45,39 +89,27 @@ class _SalaState extends State<Sala> {
                   children: [
                     ElevatedButton(
                       onPressed: () {},
-                      child: PopupMenuButton<int>(
-                        onSelected: (int result) {
-                          if (!_selectedValues.contains(result)) {
-                            _selectedValues.add(result);
-                          } else {
-                            _selectedValues.remove(result);
-                          }
+                      child: PopupMenuButton(
+                        onSelected: (result) {
+                          setState(() {
+                            if (!selectedMapas.contains(result)) {
+                              selectedMapas.add(result);
+                            } else {
+                              selectedMapas.remove(result);
+                            }
+                          });
                         },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<int>>[
-                          CheckedPopupMenuItem<int>(
-                            checked: _selectedValues.contains(1),
-                            value: 1,
-                            child: const Text('1'),
-                          ),
-                          const PopupMenuDivider(),
-                          CheckedPopupMenuItem<int>(
-                            checked: _selectedValues.contains(2),
-                            value: 2,
-                            child: const Text('2'),
-                          ),
-                          // ...other items listed here
-                        ],
+                        itemBuilder: (BuildContext context) => menuItems,
                       ),
                     ),
                     Checkbox(
-                      value: _isChecked,
+                      value: balance,
                       onChanged: (bool? value) {
                         setState(() {
-                          _isChecked = value!;
+                          balance = value!;
                         });
                       },
-                    )
+                    ),
                   ],
                 ),
                 const Text('Codigo: AAAA-44BD-2022'),
