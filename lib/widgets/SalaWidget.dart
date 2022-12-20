@@ -1,8 +1,11 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:collection';
 
+String codigo = " ";
 bool balance = false;
 final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
@@ -28,6 +31,8 @@ class _SalaState extends State<Sala> {
   // ignore: must_call_super
   initState() {
     // ignore: avoid_print
+    //
+
     //conexión entre los websocket
 
     socket.onConnect((_) {
@@ -127,7 +132,7 @@ class _SalaState extends State<Sala> {
                     ),
                   ],
                 ),
-                const Text('Codigo: AAAA-44BD-2022'),
+                Text("Codigo: $codigo"),
               ])),
           Container(
               margin: EdgeInsets.all(25),
