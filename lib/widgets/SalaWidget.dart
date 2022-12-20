@@ -47,6 +47,11 @@ class _SalaState extends State<Sala> {
   }
 
   @override
+  dispose() {
+    socket.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     menuItems = [];
     for (dynamic value in values) {
@@ -91,12 +96,17 @@ class _SalaState extends State<Sala> {
                       onPressed: () {},
                       child: PopupMenuButton(
                         onSelected: (result) {
+                          var envio = {
+                            "channel": "channel.1",
+                            "message": {"mapas": selectedMapas}
+                          };
                           setState(() {
                             if (!selectedMapas.contains(result)) {
                               selectedMapas.add(result);
                             } else {
                               selectedMapas.remove(result);
                             }
+                            socket.emit('update', envio);
                           });
                         },
                         itemBuilder: (BuildContext context) => menuItems,
@@ -107,6 +117,11 @@ class _SalaState extends State<Sala> {
                       onChanged: (bool? value) {
                         setState(() {
                           balance = value!;
+                          var envio = {
+                            "channel": "channel.1",
+                            "message": {"mapas": selectedMapas}
+                          };
+                          socket.emit('update', envio);
                         });
                       },
                     ),
