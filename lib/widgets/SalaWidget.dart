@@ -32,6 +32,10 @@ int idMatch = -1;
 int builds = 0;
 
 class _SalaState extends State<Sala> {
+  final _controller = [
+    for (var i = 0; i < 10; i++) TextEditingController(text: '')
+  ];
+
   @override
   // ignore: must_call_super
   void initState() {
@@ -58,6 +62,7 @@ class _SalaState extends State<Sala> {
       // do something with the data received from the server
       print(entrada);
       players.add(entrada);
+      _controller[players.length - 1].text = entrada;
       setState(() {});
     });
     //
@@ -82,10 +87,13 @@ class _SalaState extends State<Sala> {
         print(res.body);
 
         setState(() {
+          int i = 0;
           for (var p in List.from(decoded["team1"])..addAll(decoded["team2"])) {
             players = [];
             print('\n\n');
             players.add(p["name"]);
+            _controller[i].text = p["name"];
+            i++;
           }
           codigo = decoded["invite"];
           print(players);
@@ -118,16 +126,11 @@ class _SalaState extends State<Sala> {
             child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, mainAxisExtent: 55),
-                children: [
-                  TextFormField(
-                      initialValue: 1 < players.length ? players[1] : null,
-                      decoration: const InputDecoration(
-                          hintText: 'Username',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.redAccent),
-                          )))
-                ]),
+                children: List.generate(
+                    10,
+                    (index) => TextField(
+                          controller: _controller[index],
+                        ))),
           ),
           Expanded(
               child: Column(
