@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+bool _isChecked = false;
 final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+List<int> _selectedValues = [];
 
-class Sala extends StatelessWidget {
+class Sala extends StatefulWidget {
   const Sala({super.key});
+  @override
+  _SalaState createState() => _SalaState();
+}
 
+class _SalaState extends State<Sala> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,15 +44,40 @@ class Sala extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      style: style,
                       onPressed: () {},
-                      child: const Text('Mapa'),
+                      child: PopupMenuButton<int>(
+                        onSelected: (int result) {
+                          if (!_selectedValues.contains(result)) {
+                            _selectedValues.add(result);
+                          } else {
+                            _selectedValues.remove(result);
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<int>>[
+                          CheckedPopupMenuItem<int>(
+                            checked: _selectedValues.contains(1),
+                            value: 1,
+                            child: const Text('1'),
+                          ),
+                          const PopupMenuDivider(),
+                          CheckedPopupMenuItem<int>(
+                            checked: _selectedValues.contains(2),
+                            value: 2,
+                            child: const Text('2'),
+                          ),
+                          // ...other items listed here
+                        ],
+                      ),
                     ),
-                    ElevatedButton(
-                      style: style,
-                      onPressed: () {},
-                      child: const Text('CheckList'),
-                    ),
+                    Checkbox(
+                      value: _isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                    )
                   ],
                 ),
                 const Text('Codigo: AAAA-44BD-2022'),

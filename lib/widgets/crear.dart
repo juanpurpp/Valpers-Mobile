@@ -37,7 +37,7 @@ class Crear extends StatelessWidget {
 
           Container(
               //boton de crear partida
-              margin: EdgeInsets.all(25),
+              margin: const EdgeInsets.all(25),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
