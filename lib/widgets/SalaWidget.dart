@@ -11,6 +11,8 @@ List<dynamic> selectedMapas = [];
 
 List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
 
+List<dynamic> players = [];
+
 List<PopupMenuItem> menuItems = [];
 IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
   'transports': ['websocket'],
@@ -77,8 +79,10 @@ class _SalaState extends State<Sala> {
                     crossAxisCount: 2, mainAxisExtent: 55),
                 children: List.generate(
                     10,
-                    (index) => const TextField(
-                        decoration: InputDecoration(
+                    (index) => TextFormField(
+                        initialValue:
+                            index < players.length ? players[index] : null,
+                        decoration: const InputDecoration(
                             hintText: 'Username',
                             enabledBorder: OutlineInputBorder(
                               borderSide:
