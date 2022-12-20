@@ -57,15 +57,6 @@ class Crear extends StatelessWidget {
                   print('Response body: ${response.body}');
                   var decoded = json.decode(response.body);
                   var nid = decoded["id"];
-                  print(jsonEncode({
-                    "id": nid,
-                    "team1": [
-                      {"name": name, "rank": rank}
-                    ],
-                    "team2": [
-                      {"name": "", "rank": ""}
-                    ]
-                  }));
                   var body = jsonEncode({
                     "id": nid,
                     "team1": [
@@ -78,7 +69,9 @@ class Crear extends StatelessWidget {
                   response = await http.put(url, body: body, headers: {
                     'Content-Type': 'application/json',
                   });
-                  Navigator.pushNamed(context, '/sala');
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamed(context, '/sala',
+                      arguments: {'idMatch': nid});
                 },
                 child: const Text(
                   'Crear partida',

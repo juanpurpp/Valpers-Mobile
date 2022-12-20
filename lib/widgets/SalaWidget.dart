@@ -14,7 +14,7 @@ List<dynamic> selectedMapas = [];
 
 List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
 
-List<dynamic> players = [];
+List<dynamic> players = ['xd'];
 
 List<PopupMenuItem> menuItems = [];
 IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
@@ -28,10 +28,14 @@ class Sala extends StatefulWidget {
   _SalaState createState() => _SalaState();
 }
 
+int idMatch = -1;
+int builds = 0;
+
 class _SalaState extends State<Sala> {
   @override
   // ignore: must_call_super
-  initState() {
+  void initState() {
+    super.initState();
     // ignore: avoid_print
     //
 
@@ -50,6 +54,12 @@ class _SalaState extends State<Sala> {
       balance = entrada['balance'];
       setState(() {});
     });
+    socket.on('joining', (entrada) {
+      // do something with the data received from the server
+      print(entrada);
+      players.add(entrada);
+      setState(() {});
+    });
     //
   }
 
@@ -60,6 +70,31 @@ class _SalaState extends State<Sala> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    idMatch = arguments['idMatch'];
+    if (builds == 0) {
+      var uri = Uri.http('localhost:3000', 'matchs', {'id': "${idMatch}"});
+      http.get(uri).then((res) {
+        var decoded = json.decode(res.body);
+        print(
+            "\n\n\n-----------------------\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        print(res.body);
+
+        setState(() {
+          for (var p in List.from(decoded["team1"])..addAll(decoded["team2"])) {
+            players = [];
+            print('\n\n');
+            players.add(p["name"]);
+          }
+          codigo = decoded["invite"];
+          print(players);
+        });
+      });
+    }
+    builds++;
+    idMatch = arguments['idMatch'];
+    print(arguments['idMatch']);
     menuItems = [];
     for (dynamic value in values) {
       menuItems.add(
@@ -70,6 +105,7 @@ class _SalaState extends State<Sala> {
         ),
       );
     }
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,17 +118,16 @@ class _SalaState extends State<Sala> {
             child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, mainAxisExtent: 55),
-                children: List.generate(
-                    10,
-                    (index) => TextFormField(
-                        initialValue:
-                            index < players.length ? players[index] : null,
-                        decoration: const InputDecoration(
-                            hintText: 'Username',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.redAccent),
-                            ))))),
+                children: [
+                  TextFormField(
+                      initialValue: 1 < players.length ? players[1] : null,
+                      decoration: const InputDecoration(
+                          hintText: 'Username',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.redAccent),
+                          )))
+                ]),
           ),
           Expanded(
               child: Column(
