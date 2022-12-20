@@ -122,6 +122,11 @@ class Sala extends StatelessWidget {
               ),
               const Text('Codigo: AAAA-44BD-2022'),
             ])),
+        ElevatedButton(
+          style: style,
+          onPressed: () {},
+          child: const Text('Lanzar'),
+        ),
       ],
     );
   }
