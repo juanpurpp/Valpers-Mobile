@@ -57,16 +57,14 @@ class Crear extends StatelessWidget {
                   print('Response body: ${response.body}');
                   var decoded = json.decode(response.body);
                   var nid = decoded["id"];
-                  var body = jsonEncode({
+                  var body = json.encode({
                     "id": nid,
                     "team1": [
                       {"name": name, "rank": rank}
                     ],
-                    "team2": [
-                      {"name": "", "rank": ""}
-                    ]
+                    "team2": []
                   });
-                  response = await http.put(url, body: body, headers: {
+                  await http.put(url, body: body, headers: {
                     'Content-Type': 'application/json',
                   });
                   // ignore: use_build_context_synchronously

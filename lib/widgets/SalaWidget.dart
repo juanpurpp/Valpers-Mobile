@@ -14,7 +14,7 @@ List<dynamic> selectedMapas = [];
 
 List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
 
-List<dynamic> players = ['xd'];
+List<dynamic> players = [];
 
 List<PopupMenuItem> menuItems = [];
 IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
@@ -30,6 +30,7 @@ class Sala extends StatefulWidget {
 
 int idMatch = -1;
 int builds = 0;
+String inombre = "";
 
 class _SalaState extends State<Sala> {
   final _controller = [
@@ -38,33 +39,20 @@ class _SalaState extends State<Sala> {
 
   @override
   // ignore: must_call_super
-  void initState() {
-    super.initState();
+  initState() {
+    builds = 0;
+    idMatch = -1;
+    inombre = "";
+    players = [];
+    for (var i = 0; i < players.length; i++) {
+      if (players[i] != null) _controller[i].text = players[i];
+    }
+
     // ignore: avoid_print
     //
 
     //conexión entre los websocket
 
-    socket.onConnect((_) {
-      print('connected');
-    });
-    socket.emit('subscribe', 'channel.1');
-
-    //    Cuando se recibe una actualización
-    socket.on('message', (entrada) {
-      // do something with the data received from the server
-      print(entrada);
-      selectedMapas = entrada['mapas'].toList();
-      balance = entrada['balance'];
-      setState(() {});
-    });
-    socket.on('joining', (entrada) {
-      // do something with the data received from the server
-      print(entrada);
-      players.add(entrada);
-      _controller[players.length - 1].text = entrada;
-      setState(() {});
-    });
     //
   }
 
@@ -85,18 +73,55 @@ class _SalaState extends State<Sala> {
         print(
             "\n\n\n-----------------------\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         print(res.body);
+        print('decoded:');
+        print(decoded);
+        if (decoded["team1"] == null) decoded["team1"] == [];
+        if (decoded["team2"] == null) decoded["team2"] == [];
+        if (decoded["team1"] != null) {
+          for (var p in decoded["team1"]) {
+            print('P \n\n');
+            print(p);
+            players.add(p["name"]);
+          }
+        }
+
+        for (var p in decoded["team2"]) {
+          print('P \n\n');
+          print(p);
+          players.add(p["name"]);
+        }
 
         setState(() {
-          int i = 0;
-          for (var p in List.from(decoded["team1"])..addAll(decoded["team2"])) {
-            players = [];
-            print('\n\n');
-            players.add(p["name"]);
-            _controller[i].text = p["name"];
-            i++;
-          }
           codigo = decoded["invite"];
           print(players);
+          for (var i = 0; i < players.length; i++) {
+            if (players[i] != null) _controller[i].text = players[i];
+          }
+          socket.emit('subscribe', codigo);
+          print('suscrito al codigo ' + codigo);
+        });
+      });
+      socket.onConnect((_) {
+        print('connected');
+      });
+
+      //    Cuando se recibe una actualizaciónGET
+      socket.on('message', (entrada) {
+        // do something with the data received from the server
+        print(entrada);
+        selectedMapas = entrada['mapas'].toList();
+        balance = entrada['balance'];
+        setState(() {});
+      });
+      socket.on('joining', (entrada) async {
+        // do something with the data received from the server
+
+        players.add(entrada);
+
+        setState(() {
+          for (var i = 0; i < players.length; i++) {
+            _controller[i].text = players[i];
+          }
         });
       });
     }
@@ -144,8 +169,11 @@ class _SalaState extends State<Sala> {
                       child: PopupMenuButton(
                         onSelected: (result) {
                           var envio = {
-                            "channel": "channel.1",
-                            "message": {"mapas": selectedMapas}
+                            "channel": codigo,
+                            "message": {
+                              "mapas": selectedMapas,
+                              "balance": balance
+                            }
                           };
                           setState(() {
                             if (!selectedMapas.contains(result)) {
@@ -165,8 +193,11 @@ class _SalaState extends State<Sala> {
                         setState(() {
                           balance = value!;
                           var envio = {
-                            "channel": "channel.1",
-                            "message": {"mapas": selectedMapas}
+                            "channel": codigo,
+                            "message": {
+                              "mapas": selectedMapas,
+                              "balance": balance
+                            }
                           };
                           socket.emit('update', envio);
                         });
@@ -182,7 +213,17 @@ class _SalaState extends State<Sala> {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  var body = jsonEncode({
+                    "id": idMatch,
+                    "team1": players.sublist(0, (players.length / 2).round()),
+                    "team2": players.sublist(
+                        (players.length / 2).round(), players.length)
+                  });
+                  var uri = Uri.http('localhost:3000', 'matchs');
+                  var response = await http.put(uri, body: body, headers: {
+                    'Content-Type': 'application/json',
+                  });
                   Navigator.pushNamed(context, '/resultado');
                 },
                 child: const Text(

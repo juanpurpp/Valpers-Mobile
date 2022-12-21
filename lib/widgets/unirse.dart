@@ -1,10 +1,28 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:http/http.dart' as http;
+
+String codeSala = "";
+IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
+  'transports': ['websocket'],
+});
 
 class Unirse extends StatelessWidget {
   const Unirse({super.key});
+  initState() {
+    socket.onConnect((_) {
+      print('connected');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController codeController = TextEditingController();
+    final TextEditingController nombreController = TextEditingController();
     return Scaffold(
         body: Center(
             child: Column(
@@ -18,22 +36,24 @@ class Unirse extends StatelessWidget {
               margin: const EdgeInsets.all(25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
+                children: <Widget>[
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: nombreController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Nombre de usuario  ',
                       ),
                     ),
                   ),
-                  DropdownButtonExample(),
+                  const DropdownButtonExample(),
                 ],
               )),
           Container(
             margin: const EdgeInsets.all(25),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: codeController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'ingrese codigo ',
               ),
@@ -45,8 +65,44 @@ class Unirse extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/sala');
+                onPressed: () async {
+                  // ignore: use_build_context_synchronously
+
+                  var codeSala = codeController.text;
+                  var uri = Uri.http(
+                      'localhost:3000', 'matchs', {'invite': codeSala});
+                  var res = await http.get(uri);
+                  if (res.statusCode == 200) {
+                    print('que esta pasaandooo');
+                    print(json.encode({
+                      "channel": codeSala,
+                      "message": nombreController.text
+                    }));
+                    int nid = json.decode(res.body)["id"];
+                    socket.emit('join', {
+                      "channel": codeSala,
+                      "message": nombreController.text
+                    });
+                    var team1 = json.decode(res.body)["team1"];
+                    var team2 = json.decode(res.body)["team2"];
+                    team1 ??= [];
+                    team2 ??= [];
+                    if (team1.length < 5) {
+                      team1.add(
+                          {"name": nombreController.text, "rank": "Unranked"});
+                    } else if (team2.length < 5) {
+                      team2.add(
+                          {"name": nombreController.text, "rank": "Unranked"});
+                    }
+                    var body = json
+                        .encode({"id": nid, "team1": team1, "team2": team2});
+                    await http.put(uri, body: body, headers: {
+                      'Content-Type': 'application/json',
+                    });
+                    // ignore: use_
+                    Navigator.pushNamed(context, '/sala',
+                        arguments: {'idMatch': json.decode(res.body)["id"]});
+                  }
                 },
                 child: const Text(
                   'Unirse a partida',
@@ -59,31 +115,31 @@ class Unirse extends StatelessWidget {
 
 //dropdown
 const List<String> list = <String>[
-  'Indefinido',
-  'Hierro-1',
-  'Hierro-2',
-  'Hierro-3',
-  'Bronce-1',
-  'Bronce-2',
-  'Bronce-3',
-  'Plata-1',
-  'Plata-2',
-  'Plata-3',
-  'Oro-1',
-  'Oro-2',
-  'Oro-3',
-  'Platino-1',
-  'Platino-2',
-  'Platino-3',
-  'Diamante-1',
-  'Diamante-2',
-  'Diamante-3',
-  'Ascendente-1',
-  'Ascendente-2',
-  'Ascendente-3',
-  'Inmortal-1',
-  'Inmortal-2',
-  'Inmortal-3',
+  'Unranked',
+  'Hierro 1',
+  'Hierro 2',
+  'Hierro 3',
+  'Bronce 1',
+  'Bronce 2',
+  'Bronce 3',
+  'Plata 1',
+  'Plata 2',
+  'Plata 3',
+  'Oro 1',
+  'Oro 2',
+  'Oro 3',
+  'Platino 1',
+  'Platino 2',
+  'Platino 3',
+  'Diamante 1',
+  'Diamante 2',
+  'Diamante 3',
+  'Ascendente 1',
+  'Ascendente 2',
+  'Ascendente 3',
+  'Inmortal 1',
+  'Inmortal 2',
+  'Inmortal 3',
   'Radiante'
 ];
 
