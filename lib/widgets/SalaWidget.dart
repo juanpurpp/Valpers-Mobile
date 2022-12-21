@@ -4,6 +4,9 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:collection';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+String API_URL = dotenv.env['API_URL']!;
 
 String codigo = " ";
 bool balance = false;
@@ -17,7 +20,7 @@ List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
 List<dynamic> players = [];
 
 List<PopupMenuItem> menuItems = [];
-IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
+IO.Socket socket = IO.io('https://' + API_URL, <String, dynamic>{
   'transports': ['websocket'],
 });
 
@@ -67,7 +70,7 @@ class _SalaState extends State<Sala> {
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
     if (builds == 0) {
-      var uri = Uri.http('localhost:3000', 'matchs', {'id': "${idMatch}"});
+      var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
       http.get(uri).then((res) {
         var decoded = json.decode(res.body);
         print(
@@ -220,7 +223,7 @@ class _SalaState extends State<Sala> {
                     "team2": players.sublist(
                         (players.length / 2).round(), players.length)
                   });
-                  var uri = Uri.http('localhost:3000', 'matchs');
+                  var uri = Uri.https(API_URL, 'matchs');
                   var response = await http.put(uri, body: body, headers: {
                     'Content-Type': 'application/json',
                   });

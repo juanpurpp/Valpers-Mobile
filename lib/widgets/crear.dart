@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 String name = "", rank = "";
+String API_URL = dotenv.env['API_URL']!;
 
 class Crear extends StatelessWidget {
   const Crear({super.key});
@@ -51,7 +53,7 @@ class Crear extends StatelessWidget {
                   foregroundColor: Colors.black,
                 ),
                 onPressed: () async {
-                  var url = Uri.http('localhost:3000', 'matchs');
+                  var url = Uri.https(API_URL, 'matchs');
                   var response = await http.post(url);
                   print('Response status: ${response.statusCode}');
                   print('Response body: ${response.body}');

@@ -1,13 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 
+String API_URL = dotenv.env['API_URL']!;
 String codeSala = "";
-IO.Socket socket = IO.io('http://localhost:3000', <String, dynamic>{
+IO.Socket socket = IO.io('https://' + API_URL, <String, dynamic>{
   'transports': ['websocket'],
 });
 
@@ -69,8 +70,7 @@ class Unirse extends StatelessWidget {
                   // ignore: use_build_context_synchronously
 
                   var codeSala = codeController.text;
-                  var uri = Uri.http(
-                      'localhost:3000', 'matchs', {'invite': codeSala});
+                  var uri = Uri.https(API_URL, 'matchs', {'invite': codeSala});
                   var res = await http.get(uri);
                   if (res.statusCode == 200) {
                     print('que esta pasaandooo');
