@@ -219,15 +219,19 @@ class _SalaState extends State<Sala> {
                 onPressed: () async {
                   var body = jsonEncode({
                     "id": idMatch,
+                    "map": selectedMapas,
                     "team1": players.sublist(0, (players.length / 2).round()),
                     "team2": players.sublist(
                         (players.length / 2).round(), players.length)
                   });
-                  var uri = Uri.https(API_URL, 'matchs');
+                  var uri = Uri.https(API_URL, 'matchs',
+                      {"balance": "true", "choosemap": "true"});
                   var response = await http.put(uri, body: body, headers: {
                     'Content-Type': 'application/json',
                   });
-                  Navigator.pushNamed(context, '/resultado');
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamed(context, '/resultado',
+                      arguments: {'idMatch': idMatch});
                 },
                 child: const Text(
                   'Lanzar',
