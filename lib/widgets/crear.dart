@@ -1,4 +1,11 @@
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+String name = "", rank = "";
+String API_URL = dotenv.env['API_URL']!;
 
 class Crear extends StatelessWidget {
   const Crear({super.key});
@@ -20,10 +27,13 @@ class Crear extends StatelessWidget {
               margin: const EdgeInsets.all(25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
+                children: <Widget>[
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      onChanged: (text) {
+                        name = text;
+                      },
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Nombre de usuario  ',
                       ),
@@ -42,8 +52,26 @@ class Crear extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/sala');
+                onPressed: () async {
+                  var url = Uri.https(API_URL, 'matchs');
+                  var response = await http.post(url);
+                  print('Response status: ${response.statusCode}');
+                  print('Response body: ${response.body}');
+                  var decoded = json.decode(response.body);
+                  var nid = decoded["id"];
+                  var body = json.encode({
+                    "id": nid,
+                    "team1": [
+                      {"name": name, "rank": rank}
+                    ],
+                    "team2": []
+                  });
+                  await http.put(url, body: body, headers: {
+                    'Content-Type': 'application/json',
+                  });
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamed(context, '/sala',
+                      arguments: {'idMatch': nid});
                 },
                 child: const Text(
                   'Crear partida',
@@ -56,31 +84,31 @@ class Crear extends StatelessWidget {
 
 //dropdown
 const List<String> list = <String>[
-  'Indefinido',
-  'Hierro-1',
-  'Hierro-2',
-  'Hierro-3',
-  'Bronce-1',
-  'Bronce-2',
-  'Bronce-3',
-  'Plata-1',
-  'Plata-2',
-  'Plata-3',
-  'Oro-1',
-  'Oro-2',
-  'Oro-3',
-  'Platino-1',
-  'Platino-2',
-  'Platino-3',
-  'Diamante-1',
-  'Diamante-2',
-  'Diamante-3',
-  'Ascendente-1',
-  'Ascendente-2',
-  'Ascendente-3',
-  'Inmortal-1',
-  'Inmortal-2',
-  'Inmortal-3',
+  'Unranked',
+  'Hierro 1',
+  'Hierro 2',
+  'Hierro 3',
+  'Bronce 1',
+  'Bronce 2',
+  'Bronce 3',
+  'Plata 1',
+  'Plata 2',
+  'Plata 3',
+  'Oro 1',
+  'Oro 2',
+  'Oro 3',
+  'Platino 1',
+  'Platino 2',
+  'Platino 3',
+  'Diamante 1',
+  'Diamante 2',
+  'Diamante 3',
+  'Ascendente 1',
+  'Ascendente 2',
+  'Ascendente 3',
+  'Inmortal 1',
+  'Inmortal 2',
+  'Inmortal 3',
   'Radiante'
 ];
 
@@ -109,6 +137,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
         // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
+          rank = value;
         });
       },
       items: list.map<DropdownMenuItem<String>>((String value) {
