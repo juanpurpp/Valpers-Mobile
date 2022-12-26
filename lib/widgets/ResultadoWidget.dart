@@ -9,7 +9,8 @@ String API_URL = dotenv.env['API_URL']!;
 final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 List team1 = [], team2 = [];
-var map, idMatch;
+var map = "XD";
+int idMatch = -1, builds = 0;
 
 class Resultado extends StatefulWidget {
   const Resultado({super.key});
@@ -19,19 +20,27 @@ class Resultado extends StatefulWidget {
 }
 
 class _ResultadoState extends State<Resultado> {
+  @override
   initState() {
+    super.initState();
     print('INIT STATE');
+    builds = 0;
+    //getMatch();
+  }
+
+  Future<void> getMatch() async {
+    print(
+        "\n\n\n-----------------------\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Sacando de id: ${idMatch}");
     var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
-    http.get(uri).then((res) {
-      var decoded = json.decode(res.body);
-      print(
-          "\n\n\n-----------------------\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-      print(res.body);
-      print('decoded:');
-      print(decoded);
-      team1 = (decoded["team1"] != null) ? decoded["team1"] : [];
-      team2 = (decoded["team2"] != null) ? decoded["team2"] : [];
-    });
+    var res = await http.get(uri);
+    var decoded = json.decode(res.body);
+    print(res.body);
+    print('decoded:');
+    print(decoded);
+    team1 = (decoded["team1"] != null) ? decoded["team1"] : [];
+    team2 = (decoded["team2"] != null) ? decoded["team2"] : [];
+    map = decoded["map"];
+    setState(() {});
   }
 
   @override
@@ -40,7 +49,8 @@ class _ResultadoState extends State<Resultado> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
-
+    if (builds == 0) getMatch();
+    builds++;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,7 +78,7 @@ class _ResultadoState extends State<Resultado> {
                       (index) => TextField(
                           enabled: false,
                           decoration: InputDecoration(
-                              hintText: team1[index],
+                              hintText: team2[index],
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1, color: Colors.redAccent),
@@ -84,7 +94,7 @@ class _ResultadoState extends State<Resultado> {
                     child: Text(map),
                   ),
                 ),
-                Image.asset("images/Maps.jpg"),
+                //Image.asset("images/Maps.jpg"),
               ])),
         ],
       ),

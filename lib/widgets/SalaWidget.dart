@@ -26,6 +26,12 @@ IO.Socket socket = IO.io('https://' + API_URL, <String, dynamic>{
 
 class Sala extends StatefulWidget {
   const Sala({super.key});
+  initState() {
+    builds = 0;
+    idMatch = -1;
+    inombre = "";
+    players = [];
+  }
 
   @override
   _SalaState createState() => _SalaState();
@@ -43,6 +49,7 @@ class _SalaState extends State<Sala> {
   @override
   // ignore: must_call_super
   initState() {
+    print('Init state');
     builds = 0;
     idMatch = -1;
     inombre = "";
@@ -70,6 +77,7 @@ class _SalaState extends State<Sala> {
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
     if (builds == 0) {
+      print('obteniendo anteriores');
       var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
       http.get(uri).then((res) {
         var decoded = json.decode(res.body);
