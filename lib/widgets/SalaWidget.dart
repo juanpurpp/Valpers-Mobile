@@ -67,8 +67,20 @@ class _SalaState extends State<Sala> {
   }
 
   @override
-  dispose() {
+  dispose() async {
+    print("DISPOSE ----------- DISPOSE\n\n\n\n");
+    players.remove(inombre);
     socket.dispose();
+    var body = jsonEncode({
+      "id": idMatch,
+      "team1": players.sublist(0, (players.length / 2).round()),
+      "team2": players.sublist((players.length / 2).round(), players.length)
+    });
+    var uri =
+        Uri.https(API_URL, 'matchs', {"balance": "true", "choosemap": "true"});
+    var response = await http.put(uri, body: body, headers: {
+      'Content-Type': 'application/json',
+    });
   }
 
   @override
