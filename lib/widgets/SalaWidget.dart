@@ -1,13 +1,16 @@
 // ignore: file_names
+import 'package:share_plus/share_plus.dart';
+
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:collection';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:valpersmobile/widgets/unirse.dart';
 
 String API_URL = dotenv.env['API_URL']!;
-
+String entrada = "";
 String codigo = " ";
 bool balance = false;
 final ButtonStyle style =
@@ -81,6 +84,8 @@ class _SalaState extends State<Sala> {
     var response = await http.put(uri, body: body, headers: {
       'Content-Type': 'application/json',
     });
+    socket.emit('leave', {"channel": codigo, "message": inombre});
+    super.dispose();
   }
 
   @override
@@ -88,6 +93,7 @@ class _SalaState extends State<Sala> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
+    entrada = arguments['entrada'];
     if (builds == 0) {
       print('obteniendo anteriores');
       var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
@@ -147,6 +153,16 @@ class _SalaState extends State<Sala> {
           }
         });
       });
+      socket.on('leaving', (player) async {
+        // do something with the data received from the server
+
+        players.remove(player);
+        setState(() {});
+      });
+      socket.on('starting', (unused) async {
+        Navigator.pushNamed(context, '/resultado',
+            arguments: {'idMatch': idMatch});
+      });
     }
     builds++;
     idMatch = arguments['idMatch'];
@@ -177,8 +193,7 @@ class _SalaState extends State<Sala> {
                 children: List.generate(
                     10,
                     (index) => TextField(
-                          controller: _controller[index],
-                        ))),
+                        controller: _controller[index], enabled: false))),
           ),
           Expanded(
               child: Column(
@@ -229,6 +244,15 @@ class _SalaState extends State<Sala> {
                   ],
                 ),
                 Text("Codigo: $codigo"),
+                ElevatedButton(
+                    onPressed: () async {
+                      return Share.share(
+                          'Entra a la partida con el codigo: $codigo');
+                    },
+                    child: const Text(
+                      'Compartir :)',
+                      style: TextStyle(fontSize: 15.0),
+                    ))
               ])),
           Container(
               margin: EdgeInsets.all(25),
@@ -249,6 +273,7 @@ class _SalaState extends State<Sala> {
                   var response = await http.put(uri, body: body, headers: {
                     'Content-Type': 'application/json',
                   });
+                  socket.emit('start', codigo);
                   // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, '/resultado',
                       arguments: {'idMatch': idMatch});

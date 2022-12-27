@@ -71,7 +71,7 @@ class Crear extends StatelessWidget {
                   });
                   // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, '/sala',
-                      arguments: {'idMatch': nid});
+                      arguments: {'idMatch': nid, 'entrada': 'Creado'});
                 },
                 child: const Text(
                   'Crear partida',
