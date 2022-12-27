@@ -306,3 +306,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,dart,node,windows,macos,linux
+linux/flutter/generated_plugin_registrant.cc
