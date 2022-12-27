@@ -10,7 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:valpersmobile/widgets/unirse.dart';
 
 String API_URL = dotenv.env['API_URL']!;
-
+String entrada = "";
 String codigo = " ";
 bool balance = false;
 final ButtonStyle style =
@@ -93,6 +93,7 @@ class _SalaState extends State<Sala> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
+    entrada = arguments['entrada'];
     if (builds == 0) {
       print('obteniendo anteriores');
       var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
@@ -192,8 +193,7 @@ class _SalaState extends State<Sala> {
                 children: List.generate(
                     10,
                     (index) => TextField(
-                          controller: _controller[index],
-                        ))),
+                        controller: _controller[index], enabled: false))),
           ),
           Expanded(
               child: Column(

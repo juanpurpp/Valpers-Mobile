@@ -100,8 +100,10 @@ class Unirse extends StatelessWidget {
                       'Content-Type': 'application/json',
                     });
                     // ignore: use_
-                    Navigator.pushNamed(context, '/sala',
-                        arguments: {'idMatch': json.decode(res.body)["id"]});
+                    Navigator.pushNamed(context, '/sala', arguments: {
+                      'idMatch': json.decode(res.body)["id"],
+                      'entrada': 'unido'
+                    });
                   }
                 },
                 child: const Text(
