@@ -17,6 +17,8 @@ Material:
 
 <a title="Eventos del soket.io" href="https://drive.google.com/file/d/1-w-YW4Bz-GS1Qairs3GwiEF91MLa8pOm/view?usp=sharing"><img src="http://www.ugelcp.gob.pe/assets/img/iconos/icono-pdf.png" alt="Eventos del soket.io" width="20" height="20"/></a>   Eventos del soket.io
 
+<a title="Eventos del soket.io" href="https://drive.google.com/file/d/1ewlPeJFzs4GBhfR__u506Kc-8eGSN9Jk/view?usp=sharing"><img src="https://cdn-icons-png.flaticon.com/512/28/28869.png" alt="APK de la aplicación" width="20" height="20"/></a>   APK de la aplicación
+
 *Este proyecto fue creado para el ramo de Tecnologías Web y Móvibles de la Universidad de Los Lagos.
 
 [1]: https://drive.google.com/file/d/1YfqxyKQ3IlEuOzJiJX93Do5-AzdpdYiG/view?usp=sharing
