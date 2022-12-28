@@ -5,6 +5,10 @@ El funcionamiento de esta aplicación y su innovación viene de la mano de una m
 
 Para correr el proyecto se debe ejecutar ´flutter pub get´ y ´flutter run´, esto lo iniciará en modo debug.
 
+
+IMPORTANTE: El api utilizado para esta aplicación esta desarrollada en repositorio de valpers.gg: https://github.com/juanpurpp/valpers.gg
+
+
 Los creadores y contribuidores de este proyecto son:<br/>
 Juan Sandoval<br/>
 Sebastián Araus<br/>
