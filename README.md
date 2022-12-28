@@ -15,7 +15,7 @@ Material:
 
 <a title="Documentación API REST PDF" href="https://drive.google.com/file/d/1hGLb3Cx-U_Xzidvjl1QBXmiDAtP2pcnk/view?usp=sharing"><img src="http://www.ugelcp.gob.pe/assets/img/iconos/icono-pdf.png" alt="Documentación API REST" width="20" height="20"/></a>   Documentación de la API REST en PDF
 
-<a title="Eventos del soket.io" href="https://drive.google.com/file/d/1-w-YW4Bz-GS1Qairs3GwiEF91MLa8pOm/view?usp=sharing"><img src="http://www.ugelcp.gob.pe/assets/img/iconos/icono-pdf.png" alt="Documentación API REST" width="20" height="20"/></a>   Documentación de la API REST en PDF
+<a title="Eventos del soket.io" href="https://drive.google.com/file/d/1-w-YW4Bz-GS1Qairs3GwiEF91MLa8pOm/view?usp=sharing"><img src="http://www.ugelcp.gob.pe/assets/img/iconos/icono-pdf.png" alt="Eventos del soket.io" width="20" height="20"/></a>   Eventos del soket.io
 
 *Este proyecto fue creado para el ramo de Tecnologías Web y Móvibles de la Universidad de Los Lagos.
 
