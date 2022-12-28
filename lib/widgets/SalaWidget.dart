@@ -43,6 +43,7 @@ class Sala extends StatefulWidget {
 int idMatch = -1;
 int builds = 0;
 String inombre = "";
+bool isButtonDisabled = false;
 
 class _SalaState extends State<Sala> {
   final _controller = [
@@ -52,6 +53,8 @@ class _SalaState extends State<Sala> {
   @override
   // ignore: must_call_super
   initState() {
+    buttonOff();
+    print(entrada);
     print('Init state');
     builds = 0;
     idMatch = -1;
@@ -64,9 +67,19 @@ class _SalaState extends State<Sala> {
     // ignore: avoid_print
     //
 
-    //conexión entre los websocket
+    //conexiï¿½n entre los websocket
 
     //
+  }
+
+  void buttonOff() {
+    if (entrada != 'Creado') {
+      isButtonDisabled = true;
+      print('boton desabilitado');
+      print(isButtonDisabled);
+    } else {
+      isButtonDisabled = false;
+    }
   }
 
   @override
@@ -94,6 +107,8 @@ class _SalaState extends State<Sala> {
         <String, dynamic>{}) as Map;
     idMatch = arguments['idMatch'];
     entrada = arguments['entrada'];
+    print(entrada);
+    buttonOff();
     if (builds == 0) {
       print('obteniendo anteriores');
       var uri = Uri.https(API_URL, 'matchs', {'id': "${idMatch}"});
@@ -134,7 +149,7 @@ class _SalaState extends State<Sala> {
         print('connected');
       });
 
-      //    Cuando se recibe una actualizaciónGET
+      //    Cuando se recibe una actualizaciï¿½nGET
       socket.on('message', (entrada) {
         // do something with the data received from the server
         print(entrada);
@@ -260,24 +275,28 @@ class _SalaState extends State<Sala> {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () async {
-                  var body = jsonEncode({
-                    "id": idMatch,
-                    "map": selectedMapas,
-                    "team1": players.sublist(0, (players.length / 2).round()),
-                    "team2": players.sublist(
-                        (players.length / 2).round(), players.length)
-                  });
-                  var uri = Uri.https(API_URL, 'matchs',
-                      {"balance": "true", "choosemap": "true"});
-                  var response = await http.put(uri, body: body, headers: {
-                    'Content-Type': 'application/json',
-                  });
-                  socket.emit('start', codigo);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushNamed(context, '/resultado',
-                      arguments: {'idMatch': idMatch});
-                },
+                onPressed: isButtonDisabled
+                    ? null
+                    : () async {
+                        var body = jsonEncode({
+                          "id": idMatch,
+                          "map": selectedMapas,
+                          "team1":
+                              players.sublist(0, (players.length / 2).round()),
+                          "team2": players.sublist(
+                              (players.length / 2).round(), players.length)
+                        });
+                        var uri = Uri.https(API_URL, 'matchs',
+                            {"balance": "true", "choosemap": "true"});
+                        var response =
+                            await http.put(uri, body: body, headers: {
+                          'Content-Type': 'application/json',
+                        });
+                        socket.emit('start', codigo);
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(context, '/resultado',
+                            arguments: {'idMatch': idMatch});
+                      },
                 child: const Text(
                   'Lanzar',
                   style: TextStyle(fontSize: 20.0),
