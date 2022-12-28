@@ -57,7 +57,8 @@ class _ResultadoState extends State<Resultado> {
         children: <Widget>[
           const Expanded(
               child: Center(
-            child: Text('Resultado'),
+            child: Text('Resultado',
+                style: TextStyle(color: Color(0xFFE74C3C), fontSize: 40.0)),
           )),
           Expanded(
             child: GridView(

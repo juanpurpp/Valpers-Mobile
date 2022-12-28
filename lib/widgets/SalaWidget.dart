@@ -18,7 +18,16 @@ final ButtonStyle style =
 
 List<dynamic> selectedMapas = [];
 
-List<dynamic> values = ['Breeze', "Haven", "Split", "Bind", "Dust 2"];
+List<dynamic> values = [
+  'Breeze',
+  "Haven",
+  "Split",
+  "Bind",
+  "Pearl",
+  "Fracture",
+  "Ascent",
+  "Icebox"
+];
 
 List<dynamic> players = [];
 
@@ -199,7 +208,10 @@ class _SalaState extends State<Sala> {
         children: <Widget>[
           const Expanded(
               child: Center(
-            child: Text('Sala'),
+            child: Text(
+              'Sala',
+              style: TextStyle(color: Color(0xFFE74C3C), fontSize: 40.0),
+            ),
           )),
           Expanded(
             child: GridView(
